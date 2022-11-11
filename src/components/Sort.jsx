@@ -1,6 +1,11 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 const Sort = () => {
+  const dispatch = useDispatch()
+  const sort = useSelector(state => state.filter.sort)
+
+
   const [sortActive, setSortActive] = React.useState(false);
   const [selected, setSelected] = React.useState(0);
 
@@ -28,13 +33,13 @@ const Sort = () => {
         </svg>
         <b>Сортировка по:</b>
 
-        <span onClick={() => setSortActive(!sortActive)}>{list[selected]}</span>
+        <span onClick={() => setSortActive(!sortActive)}>{sort.name}</span>
       </div>
       {sortActive && (
         <div className="sort__popup">
           <ul>
             {list.map((el, index) => (
-              <li key={index} onClick={() => closeModal(index)} className={selected === index ? "active" : ""}>
+              <li key={index} onClick={() => closeModal(index)} className={sort === index ? "active" : ""}>
                 {el}
               </li>
             ))}

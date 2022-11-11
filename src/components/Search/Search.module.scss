@@ -1,0 +1,19 @@
+.input_search {
+    border: 1px solid rgba(0,0,0, 0.1);
+    padding: 12px 20px;
+    width: 400px;
+    border-radius: 10px;
+    font-size: 16px;
+}
+
+.icon {
+    font-size: 24px;
+    margin-left: -30px;
+    margin-bottom: -6px;
+    opacity: 0.3;
+    cursor: pointer;
+
+    &:hover {
+        opacity: 0.8;
+    }
+}
