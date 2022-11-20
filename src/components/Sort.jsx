@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 
-const Sort = () => {
+const Sort = ({ value, onChangeSort }) => {
   const dispatch = useDispatch()
   const sort = useSelector(state => state.filter.sort)
 

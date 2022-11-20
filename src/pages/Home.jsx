@@ -10,35 +10,39 @@ import { setCategoryId } from "../features/filterSlice";
 
 const Home = () => {
   const categoryId = useSelector((state) => state.filter.categoryId);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
 
   const { searchValue } = React.useContext(SearchContext);
 
   const [pizzas, setPizzas] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [sortType, setSortType] = React.useState({
+    name: "популярности",
+    sortProperty: "rating",
+  });
 
   const onChangeCategory = (id) => {
-    dispatch(setCategoryId(id))
-  }
+    dispatch(setCategoryId(id));
+  };
 
   const getPizzas = async () => {
-    // setIsLoading(false)
+    setIsLoading(true);
     const res = await axios.get(
-      "https://63642ce67b209ece0f42316d.mockapi.io/items"
+      `https://63642ce67b209ece0f42316d.mockapi.io/items?${categoryId > 0 ? `category=${categoryId}` : ''}`
     );
-
     setPizzas(res.data);
     setIsLoading(false);
     window.scrollTo(0, 0);
   };
   React.useEffect(() => {
     getPizzas();
-  }, []);
+  }, [categoryId]);
+
   return (
     <div className="container">
       <div className="content__top">
         <Categories value={categoryId} onChangeCategory={onChangeCategory} />
-        <Sort />
+        <Sort value={sortType} onChangeSort={(i) => setSortType(i)} />
       </div>
 
       <h2 className="content__title">Все пиццы</h2>
