@@ -14,12 +14,17 @@ const Home = () => {
 
   const { searchValue } = React.useContext(SearchContext);
 
+  const [formactive, setFormActive] = React.useState(false)
   const [pizzas, setPizzas] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(false);
   const [sortType, setSortType] = React.useState({
     name: "популярности",
     sortProperty: "rating",
   });
+
+  const handleActiveOtziv = () => {
+    setFormActive(true)
+  }
 
   const onChangeCategory = (id) => {
     dispatch(setCategoryId(id));
@@ -28,7 +33,7 @@ const Home = () => {
   const getPizzas = async () => {
     setIsLoading(true);
     const res = await axios.get(
-      `https://63642ce67b209ece0f42316d.mockapi.io/items?${categoryId > 0 ? `category=${categoryId}` : ''}`
+      `https://63642ce67b209ece0f42316d.mockapi.io/items?${categoryId > 0 ? `category=${categoryId}` : ''}&sortBy=${sortType.sortProperty}&order=desc`
     );
     setPizzas(res.data);
     setIsLoading(false);
@@ -36,7 +41,7 @@ const Home = () => {
   };
   React.useEffect(() => {
     getPizzas();
-  }, [categoryId]);
+  }, [categoryId, sortType]);
 
   return (
     <div className="container">
@@ -58,6 +63,19 @@ const Home = () => {
               ?.map((obj) => {
                 return <PizzaBlock key={obj.id} {...obj} />;
               })}
+        <button onClick={handleActiveOtziv} className="btn_otziv">
+          Оставить отзыв
+        </button>
+        {formactive && (
+          <div className="atziv_popup">
+            <form action="mail.php" method="POST">
+              <input type="text" placeholder="Имя" name="user_name"/>
+              <input type="text" placeholder="Отзыв" name="user_lastName"/>
+              <input type="number" placeholder="Телефон" name="user_phone"/>
+              <button type="submit">Отправить отзыв</button>
+            </form>
+          </div>
+        )}
       </div>
     </div>
   );

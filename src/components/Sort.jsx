@@ -1,20 +1,21 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+// import { useSelector, useDispatch } from "react-redux";
 
 const Sort = ({ value, onChangeSort }) => {
-  const dispatch = useDispatch()
-  const sort = useSelector(state => state.filter.sort)
-
+  // const dispatch = useDispatch();
+  // const sort = useSelector((state) => state.filter.sort);
 
   const [sortActive, setSortActive] = React.useState(false);
-  const [selected, setSelected] = React.useState(0);
-
-  const list = ["популярности", "цене", "алфавиту"];
+  const list = [
+    { name: "популярности", sortProperty: "rating" },
+    { name: "цене", sortProperty: "price" },
+    { name: "алфавиту", sortProperty: "title" }
+  ];
 
   const closeModal = (index) => {
-    setSelected(index)
-    setSortActive(false)
-  }
+    onChangeSort(index);
+    setSortActive(false);
+  };
 
   return (
     <div className="sort">
@@ -33,14 +34,18 @@ const Sort = ({ value, onChangeSort }) => {
         </svg>
         <b>Сортировка по:</b>
 
-        <span onClick={() => setSortActive(!sortActive)}>{sort.name}</span>
+        <span onClick={() => setSortActive(!sortActive)}>{value.name}</span>
       </div>
       {sortActive && (
         <div className="sort__popup">
           <ul>
-            {list.map((el, index) => (
-              <li key={index} onClick={() => closeModal(index)} className={sort === index ? "active" : ""}>
-                {el}
+            {list.map((obj, index) => (
+              <li
+                key={index}
+                onClick={() => closeModal(obj)}
+                className={value.sortProperty === obj.sortProperty ? "active" : ""}
+              >
+                {obj.name}
               </li>
             ))}
           </ul>
