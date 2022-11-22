@@ -68,10 +68,15 @@ const Home = () => {
         </button>
         {formactive && (
           <div className="atziv_popup">
-            <form action="mail.php" method="POST">
-              <input type="text" placeholder="Имя" name="user_name"/>
-              <input type="text" placeholder="Отзыв" name="user_lastName"/>
-              <input type="number" placeholder="Телефон" name="user_phone"/>
+            <form
+              enctype="multipart/form-data"
+              method="post"
+              id="form"
+              onSubmit="send(event, 'send.php')"
+            >
+              <input type="text" placeholder="Имя" name="name" />
+              <input type="text" placeholder="Отзыв" name="otziv" />
+              <input type="number" placeholder="Телефон" name="phone" />
               <button type="submit">Отправить отзыв</button>
             </form>
           </div>
