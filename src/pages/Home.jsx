@@ -40,7 +40,7 @@ const Home = () => {
     window.scrollTo(0, 0);
   };
   React.useEffect(() => {
-    getPizzas();
+    getPizzas()
   }, [categoryId, sortType]);
 
   return (
