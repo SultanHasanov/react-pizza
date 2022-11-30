@@ -8,10 +8,15 @@ import CartEmpty from "../components/CartEmpty";
 const Cart = () => {
   const dispatch = useDispatch();
   const { totalPrice, items } = useSelector((state) => state.cart);
-  
-  const discount = totalPrice >= 2500 ? totalPrice / 10 : 0;
 
-// console.log(discount)
+  const discount =
+    totalPrice >= 2000 && totalPrice < 5000
+      ? totalPrice / 10
+      : 0 || totalPrice >= 5000
+      ? totalPrice / 5
+      : 0; 
+
+  // console.log(discount)
   const totalCount = items.reduce((sum, item) => sum + item.count, 0);
 
   const onClickClear = () => {
@@ -115,10 +120,10 @@ const Cart = () => {
                 Сумма заказа: <b>{totalPrice} ₽</b>
               </span>
               <span>
-                Скидка: <b> {discount} ₽</b> 
+                Скидка: <b> {discount} ₽</b>
               </span>
               <span>
-                Итоговая сумма со скидкой: <b> {totalPrice - discount} ₽</b> 
+                Итоговая сумма со скидкой: <b> {totalPrice - discount} ₽</b>
               </span>
             </div>
           </div>

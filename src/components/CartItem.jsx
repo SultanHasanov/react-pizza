@@ -35,6 +35,7 @@ const CartItem = ({ id, title, type, size, price, count, imageUrl }) => {
           <p>
             {type}, {size} см.
           </p>
+          <p>Цена: {price} ₽</p>
         </div>
         <div class="cart__item-count">
           <div

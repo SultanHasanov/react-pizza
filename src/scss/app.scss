@@ -466,8 +466,56 @@ body {
 .totalPrice_discount{
   display: flex;
   flex-direction: column;
-  height: 100px;
+  width: 385px;
   b {
             color: $orange;
           }
+}
+
+@media (max-width: 420px) {
+  .cart__item {
+    .cart__item-price{
+      margin-left: 15px;
+    }
+    
+    b {
+      font-size: 15px;
+      margin: 0 5px 0 5px;
+    }
+    button {
+      width: 10px;
+      height: 10px;
+    }
+    p {
+      font-size: 15px;
+      margin-left: 15px;
+
+    }
+    h1 {
+      font-size: 10px;
+    }
+    h3 {
+      font-size: 15px;
+      margin-left: 15px;
+
+    }
+    img {
+      width: 60px;
+      height: 60px;
+    }
+  }
+}
+
+@media (max-width: 420px) {
+  .cart__bottom-details {
+    span {
+      font-size: 17px;
+    }
+  }
+  .totalPrice_discount {
+    margin-left: 40px;
+    span {
+      font-size: 17px;
+    }
+  }
 }
