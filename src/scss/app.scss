@@ -463,3 +463,11 @@ body {
     }
   }
 }
+.totalPrice_discount{
+  display: flex;
+  flex-direction: column;
+  height: 100px;
+  b {
+            color: $orange;
+          }
+}

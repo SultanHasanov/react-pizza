@@ -8,7 +8,10 @@ import CartEmpty from "../components/CartEmpty";
 const Cart = () => {
   const dispatch = useDispatch();
   const { totalPrice, items } = useSelector((state) => state.cart);
+  
+  const discount = totalPrice >= 2500 ? totalPrice / 10 : 0;
 
+// console.log(discount)
   const totalCount = items.reduce((sum, item) => sum + item.count, 0);
 
   const onClickClear = () => {
@@ -18,7 +21,7 @@ const Cart = () => {
   };
 
   if (!totalPrice) {
-    return <CartEmpty />
+    return <CartEmpty />;
   }
   return (
     <div className="container container--cart">
@@ -105,13 +108,19 @@ const Cart = () => {
         <div class="cart__bottom">
           <div class="cart__bottom-details">
             <span>
-              {" "}
-              Всего пицц: <b>{totalCount} шт.</b>{" "}
+              Всего пицц: <b>{totalCount} шт.</b>
             </span>
-            <span>
-              {" "}
-              Сумма заказа: <b>{totalPrice} ₽</b>{" "}
-            </span>
+            <div className="totalPrice_discount">
+              <span>
+                Сумма заказа: <b>{totalPrice} ₽</b>
+              </span>
+              <span>
+                Скидка: <b> {discount} ₽</b> 
+              </span>
+              <span>
+                Итоговая сумма со скидкой: <b> {totalPrice - discount} ₽</b> 
+              </span>
+            </div>
           </div>
           <div class="cart__bottom-buttons">
             <Link to="/" class="button button--outline button--add go-back-btn">
