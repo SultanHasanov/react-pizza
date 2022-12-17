@@ -121,6 +121,7 @@ const Cart = () => {
               </span>
               <span>
                 Скидка: <b> {discount} ₽</b>
+                <p>от 2т = 10% / от 5т = 20%</p>
               </span>
               <span>
                 Итоговая сумма со скидкой: <b> {totalPrice - discount} ₽</b>

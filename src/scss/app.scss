@@ -467,6 +467,11 @@ body {
   display: flex;
   flex-direction: column;
   width: 385px;
+  p {
+    color: #7b7b7b;
+    font-size: 15px;
+    opacity: 0.6;
+  }
   b {
             color: $orange;
           }
