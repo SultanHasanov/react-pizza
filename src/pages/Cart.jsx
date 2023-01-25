@@ -10,15 +10,17 @@ import { chat_id, token } from "../key";
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const [name, setName] = useState('')
-  const [phone, setPhone] = useState('')
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const { totalPrice, items } = useSelector((state) => state.cart);
   const imageUrl = items.map((el) => el.imageUrl);
   const title = items.map((el) => el.title);
   const type = items.map((el) => el.type);
   const size = items.map((el) => el.size);
-  console.log(items)
+  const count = items.map((el) => el.count);
+  
+  console.log(items);
   const discount =
     totalPrice >= 2000 && totalPrice < 5000
       ? totalPrice / 10
@@ -36,24 +38,25 @@ const Cart = () => {
   };
 
   function handleSend() {
-    
     const url_api = `https://api.telegram.org/bot${token}/sendMessage`;
     let message = `<i>Заявка на пиццу</i>\n`;
     message += `<b>Имя: </b>${name}\n`;
     message += `<b>Телефон: </b>${phone}\n`;
     message += `<b>Адрес: </b>${address}\n`;
-    message += `<b>Кол-во: </b>${totalCount}\n`;
+    message += `<b>Пицца: </b>${title}\n`
+    message += `<b>Кол-во: </b>${count} <b>шт.</b>  <b>Всего:</b> ${totalCount} <b>шт.</b>\n`;
     message += `<b>Тесто: </b>${type}\n`;
     message += `<b>Размер: </b>${size}\n`;
-    message += `<b>Сумма заказа: </b>${totalPrice}\n`;
-    message += `Название: <a href="${imageUrl}">${title}</a>`;
-      
-      axios.post(url_api, {
-        chat_id: chat_id,
-        parse_mode: "html",
-        text: message,
-      });
+    message += `<b>Сумма заказа: </b>${totalPrice} <b>₽</b>  <b>Скидка: </b> ${discount} <b>₽</b>  <b>Итого: </b> ${
+      totalPrice - discount
+    } <b>₽</b>\n`;
+    message += `Название: <a href="${imageUrl}"><b>${title}</b></a>`;
 
+    axios.post(url_api, {
+      chat_id: chat_id,
+      parse_mode: "html",
+      text: message,
+    });
   }
 
   if (!totalPrice) {
@@ -141,6 +144,7 @@ const Cart = () => {
           {items.map((item) => (
             <CartItem key={item.id} {...item} />
           ))}
+          
         </div>
         <div class="cart__bottom">
           <div class="cart__bottom-details">

@@ -247,6 +247,8 @@ body {
 
   .content__items {
     display: block;
+    
+
   }
   
 
@@ -256,14 +258,17 @@ body {
     border-top: 1px solid $gray-line;
     padding-top: 30px;
     margin-top: 30px;
-    
+    @media (max-width: 420px) {
+      width: 350px;
+      margin-left: 58px;
+    }
 
     &-img {
       display: flex;
       align-items: center;
       margin-right: 15px;
       width: 10%;
-      @media (max-width: 412px) {
+      @media (max-width: 420px) {
         margin-right: 0;
       }
 
@@ -382,11 +387,22 @@ body {
 
   &__bottom {
     margin: 50px 0;
+    @media (max-width: 420px) {
+        justify-content: center;
+        align-items: center;
+      }
 
     &-details {
       display: flex;
       justify-content: space-between;
+      @media (max-width: 420px) {
+        width: 377px;
+        justify-content: center;
+        align-items: center;
+        margin-left: 88px;
+      
 
+      }
       span {
         font-size: 22px;
 
@@ -402,6 +418,9 @@ body {
       display: flex;
       justify-content: space-between;
       margin-top: 40px;
+      @media (max-width: 420px) {
+        margin-left: 120px;
+      }
 
       .go-back-btn {
         display: flex;
@@ -448,7 +467,7 @@ body {
     margin: 80px auto;
     width: 620px;
     text-align: center;
-    @media (max-width: 412px) {
+    @media (max-width: 420px) {
       width: auto;
     }
     h2 {
@@ -537,12 +556,18 @@ body {
   .cart__bottom-details {
     span {
       font-size: 17px;
+      @media (max-width: 420px) {
+        font-size: 12px;
+      }
     }
   }
   .totalPrice_discount {
     margin-left: 40px;
     span {
       font-size: 17px;
+      @media (max-width: 420px) {
+        font-size: 12px;
+      }
     }
   }
 }
