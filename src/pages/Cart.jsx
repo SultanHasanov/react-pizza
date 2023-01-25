@@ -4,17 +4,26 @@ import { useDispatch, useSelector } from "react-redux";
 import CartItem from "../components/CartItem";
 import { clearItem } from "../features/cartSlice";
 import CartEmpty from "../components/CartEmpty";
+import axios from "axios";
+import { useState } from "react";
 
 const Cart = () => {
   const dispatch = useDispatch();
+  const [name, setName] = useState('')
+  const [phone, setPhone] = useState('')
+  const [address, setAddress] = useState("");
   const { totalPrice, items } = useSelector((state) => state.cart);
-
+  const imageUrl = items.map((el) => el.imageUrl);
+  const title = items.map((el) => el.title);
+  const type = items.map((el) => el.type);
+  const size = items.map((el) => el.size);
+  console.log(items)
   const discount =
     totalPrice >= 2000 && totalPrice < 5000
       ? totalPrice / 10
       : 0 || totalPrice >= 5000
       ? totalPrice / 5
-      : 0; 
+      : 0;
 
   // console.log(discount)
   const totalCount = items.reduce((sum, item) => sum + item.count, 0);
@@ -25,9 +34,32 @@ const Cart = () => {
     }
   };
 
+  function handleSend() {
+    const token = "5827530379:AAHxPmOgLHryfbU0CP-yiWpXo96VxisbD3Q";
+    const chat_id = "-1001811930704";
+    const url_api = `https://api.telegram.org/bot${token}/sendMessage`;
+    let message = `<i>Заявка на пиццу</i>\n`;
+    message += `<b>Имя: </b>${name}\n`;
+    message += `<b>Телефон: </b>${phone}\n`;
+    message += `<b>Адрес: </b>${address}\n`;
+    message += `<b>Кол-во: </b>${totalCount}\n`;
+    message += `<b>Тесто: </b>${type}\n`;
+    message += `<b>Размер: </b>${size}\n`;
+    message += `<b>Сумма заказа: </b>${totalPrice}\n`;
+    message += `Название: <a href="${imageUrl}">${title}</a>`;
+      
+      axios.post(url_api, {
+        chat_id: chat_id,
+        parse_mode: "html",
+        text: message,
+      });
+
+  }
+
   if (!totalPrice) {
     return <CartEmpty />;
   }
+
   return (
     <div className="container container--cart">
       <div class="cart">
@@ -148,11 +180,38 @@ const Cart = () => {
 
               <span>Вернуться назад</span>
             </Link>
-            <div class="button pay-btn">
-              <span>Оплатить сейчас</span>
-            </div>
+            {/* <div class="button pay-btn">
+              <span onClick={handleSend}>Оплатить сейчас</span>
+            </div> */}
           </div>
         </div>
+      </div>
+      <div className="order">
+        <form onSubmit={(e) => e.preventDefault()}>
+          <h2>Оформление заказа</h2>
+          <input
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            type="text"
+            placeholder="Имя Фамилия"
+          />
+          <input
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            type="number"
+            name="phone"
+            placeholder="+7904 000 80 80"
+          />
+          <input
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+            type="text"
+            name="address"
+            placeholder="Адрес доставки"
+          />
+          {/* <span>Итого: {totalPrice} руб.</span> */}
+          <button onClick={handleSend}>Оформить заказ</button>
+        </form>
       </div>
     </div>
   );
