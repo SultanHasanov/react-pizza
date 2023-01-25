@@ -6,6 +6,7 @@ import { clearItem } from "../features/cartSlice";
 import CartEmpty from "../components/CartEmpty";
 import axios from "axios";
 import { useState } from "react";
+import { chat_id, token } from "../key";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -35,8 +36,7 @@ const Cart = () => {
   };
 
   function handleSend() {
-    const token = "5827530379:AAHxPmOgLHryfbU0CP-yiWpXo96VxisbD3Q";
-    const chat_id = "-1001811930704";
+    
     const url_api = `https://api.telegram.org/bot${token}/sendMessage`;
     let message = `<i>Заявка на пиццу</i>\n`;
     message += `<b>Имя: </b>${name}\n`;
