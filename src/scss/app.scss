@@ -573,17 +573,17 @@ body {
 }
 .order {
   width: 353px;
-  height: 450px;
+  height: 620px;
   background: #F7F6F6;
   border-radius: 20px;
  }
  form {
-    height: 556px;
+    height: 656px;
     width: 353px;
     display: flex;
     align-items: center;
     flex-direction: column;
-    margin-top: 42px;
+    margin-top: 20px;
     button {
         margin-top: 58px;
         border: 1px solid #fe5f1e;
@@ -617,4 +617,17 @@ body {
         background: transparent;
         outline: none;
         font-size: 15px;}
+ }
+
+ .photo_inp {
+  
+    width: 305px;
+    height: 36px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    border: none;
+    padding-left: 10px;
+    color: black;
+    background-color: rgb(223, 219, 219);
+
  }

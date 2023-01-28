@@ -13,14 +13,16 @@ const Cart = () => {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
+  const [file, setFile] = useState(null);
+  const [fileActive, setFileActive] = useState();
+  console.log(file);
   const { totalPrice, items } = useSelector((state) => state.cart);
-  const imageUrl = items.map((el) => el.imageUrl);
+  // const imageUrl = items.map((el) => el.imageUrl);
   const title = items.map((el) => el.title);
   const type = items.map((el) => el.type);
   const size = items.map((el) => el.size);
   const count = items.map((el) => el.count);
-  
-  console.log(items);
+
   const discount =
     totalPrice >= 2000 && totalPrice < 5000
       ? totalPrice / 10
@@ -28,7 +30,6 @@ const Cart = () => {
       ? totalPrice / 5
       : 0;
 
-  // console.log(discount)
   const totalCount = items.reduce((sum, item) => sum + item.count, 0);
 
   const onClickClear = () => {
@@ -38,36 +39,63 @@ const Cart = () => {
   };
 
   function handleSend() {
-    const url_api = `https://api.telegram.org/bot${token}/sendMessage`;
+    const url_api = `https://api.telegram.org/bot${token}/sendDocument`;
+    const url_api2 = `https://api.telegram.org/bot${token}/sendMessage`;
+
     let message = `<i>Заявка на пиццу</i>\n`;
     message += `<b>Имя: </b>${name}\n`;
     message += `<b>Телефон: </b>${phone}\n`;
     message += `<b>Адрес: </b>${address}\n`;
-    message += `<b>Пицца: </b>${title}\n`
+    message += `<b>Пицца: </b>${title}\n`;
     message += `<b>Кол-во: </b>${count} <b>шт.</b>  <b>Всего:</b> ${totalCount} <b>шт.</b>\n`;
     message += `<b>Тесто: </b>${type}\n`;
     message += `<b>Размер: </b>${size}\n`;
     message += `<b>Сумма заказа: </b>${totalPrice} <b>₽</b>  <b>Скидка: </b> ${discount} <b>₽</b>  <b>Итого: </b> ${
       totalPrice - discount
     } <b>₽</b>\n`;
-    message += `Название: <a href="${imageUrl}"><b>${title}</b></a>`;
+    // message += `Название: <a href="${imageUrl}"><b>${title}</b></a>`;
+ if(!file){
 
-    axios.post(url_api, {
-      chat_id: chat_id,
-      parse_mode: "html",
-      text: message,
-    });
+    alert("Загрузите квитанцию !!!");
+ } else {
+   axios.post(url_api2, {
+     chat_id: chat_id,
+     parse_mode: "html",
+     text: message,
+   });
+   
+
+   const formData = new FormData();
+   formData.append("document", file);
+   formData.append("chat_id", chat_id);
+
+   axios.post(url_api, formData);
+   setName("");
+   setPhone("");
+   setAddress("");
+   window.alert("Заявка отправлена !!!");
+   dispatch(clearItem());
+    setFileActive()
+    
+ }
+    
   }
+ 
 
   if (!totalPrice) {
     return <CartEmpty />;
   }
 
+  const onChangeFile = (e) => {
+    setFile(e.target.files[0]);
+    setFileActive(URL.createObjectURL(e.target.files[0]));
+  }
+
   return (
     <div className="container container--cart">
-      <div class="cart">
-        <div class="cart__top">
-          <h2 class="content__title">
+      <div className="cart">
+        <div className="cart__top">
+          <h2 className="content__title">
             <svg
               width="18"
               height="18"
@@ -99,7 +127,7 @@ const Cart = () => {
             </svg>
             Корзина
           </h2>
-          <div onClick={onClickClear} class="cart__clear">
+          <div onClick={onClickClear} className="cart__clear">
             <svg
               width="20"
               height="20"
@@ -140,14 +168,13 @@ const Cart = () => {
             <span>Очистить корзину</span>
           </div>
         </div>
-        <div class="content__items">
+        <div className="content__items">
           {items.map((item) => (
             <CartItem key={item.id} {...item} />
           ))}
-          
         </div>
-        <div class="cart__bottom">
-          <div class="cart__bottom-details">
+        <div className="cart__bottom">
+          <div className="cart__bottom-details">
             <span>
               Всего пицц: <b>{totalCount} шт.</b>
             </span>
@@ -164,8 +191,11 @@ const Cart = () => {
               </span>
             </div>
           </div>
-          <div class="cart__bottom-buttons">
-            <Link to="/" class="button button--outline button--add go-back-btn">
+          <div className="cart__bottom-buttons">
+            <Link
+              to="/"
+              className="button button--outline button--add go-back-btn"
+            >
               <svg
                 width="8"
                 height="14"
@@ -184,14 +214,17 @@ const Cart = () => {
 
               <span>Вернуться назад</span>
             </Link>
-            {/* <div class="button pay-btn">
+            {/* <div className="button pay-btn">
               <span onClick={handleSend}>Оплатить сейчас</span>
             </div> */}
           </div>
         </div>
       </div>
       <div className="order">
-        <form onSubmit={(e) => e.preventDefault()}>
+        <form
+          style={{ display: "flex", flexDirection: "column" }}
+          onSubmit={(e) => e.preventDefault()}
+        >
           <h2>Оформление заказа</h2>
           <input
             value={name}
@@ -206,6 +239,7 @@ const Cart = () => {
             name="phone"
             placeholder="+7904 000 80 80"
           />
+
           <input
             value={address}
             onChange={(e) => setAddress(e.target.value)}
@@ -213,8 +247,23 @@ const Cart = () => {
             name="address"
             placeholder="Адрес доставки"
           />
+
+          <input
+            className="photo_inp"
+            type="file"
+            onChange={onChangeFile}
+          />
+          {/* <iframe src={file}></iframe> */}
+          <iframe  src={fileActive} width="300px" height='200px'></iframe>
+
+          {/* <a target="_blank" href={file}>
+            Open
+          </a> */}
+
           {/* <span>Итого: {totalPrice} руб.</span> */}
-          <button onClick={handleSend}>Оформить заказ</button>
+          <button style={{ marginTop: "30px" }} onClick={handleSend}>
+            Оформить заказ
+          </button>
         </form>
       </div>
     </div>
