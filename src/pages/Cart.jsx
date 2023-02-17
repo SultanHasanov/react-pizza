@@ -54,10 +54,10 @@ const Cart = () => {
       totalPrice - discount
     } <b>₽</b>\n`;
     // message += `Название: <a href="${imageUrl}"><b>${title}</b></a>`;
- if(!file){
+//  if(!file){
 
-    alert("Загрузите квитанцию !!!");
- } else {
+//     alert("Загрузите квитанцию !!!");
+//  } else {
    axios.post(url_api2, {
      chat_id: chat_id,
      parse_mode: "html",
@@ -77,11 +77,8 @@ const Cart = () => {
    dispatch(clearItem());
     setFileActive()
     
- }
-    
-  }
  
-
+}              
   if (!totalPrice) {
     return <CartEmpty />;
   }
@@ -261,7 +258,7 @@ const Cart = () => {
           </a> */}
 
           {/* <span>Итого: {totalPrice} руб.</span> */}
-          <button style={{ marginTop: "30px" }} onClick={handleSend}>
+          <button style={{ marginTop: "50px" }} onClick={handleSend}>
             Оформить заказ
           </button>
         </form>
@@ -270,4 +267,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default Cart
