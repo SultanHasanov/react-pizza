@@ -631,3 +631,70 @@ body {
     background-color: rgb(223, 219, 219);
 
  }
+
+ .addPizzaCard {
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    position: relative;
+    padding: 10px;
+    width: 96px;
+    height: 43px;
+    border: 1px solid #fe5f1e;
+    // background-color: rgb(243, 243, 247);
+    box-sizing: border-box;
+    border-radius: 9999px;
+    // -webkit-box-pack: justify;
+    justify-content: space-between;
+      button {
+        
+        background: none;
+        cursor: pointer;
+        // position: relative;
+        // vertical-align: top;
+        // height: 100%;
+        // padding: 0px 10px;
+        // width: 35.41%;
+        border: none;
+        display: flex;
+        // -webkit-box-pack: center;
+        // justify-content: center;
+        // -webkit-box-align: center;
+        align-items: center;
+        font-size: 28px;
+      }
+ }
+
+ .home_body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 800px;
+  justify-content: space-between;
+ }
+ @media (max-width: 412px) {
+  .home_body {
+    flex-direction: column;
+  }
+ }
+
+ .image_home {
+ 
+ }
+
+ .image_home2{
+  
+ }
+
+.home_wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+@media (max-width: 412px) {
+  .home_wrapper {
+    text-align: center;
+  }
+ }

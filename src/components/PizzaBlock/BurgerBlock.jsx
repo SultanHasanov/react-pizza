@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { addItem, minusItem } from '../../features/cartSlice'
 
-const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }) => {
+const BurgerBlock = ({ id, title, price, imageUrl }) => {
   const typeNames = ['тонкое', 'традиционное']
   const [activeType, setActiveType] = React.useState(0)
   const [activeSize, setActiveSize] = React.useState(0);
@@ -21,8 +21,7 @@ const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }) => {
       title,
       price,
       imageUrl,
-      type: typeNames[activeType],
-      size: sizes[activeSize],
+     
     };
     dispatch(addItem(item))
   }
@@ -39,34 +38,7 @@ const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }) => {
         <div className="pizza-block">
           <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
           <h4 className="pizza-block__title">{title}</h4>
-          <div className="pizza-block__selector">
-            <ul>
-              {types.map((el, index) => {
-                return (
-                  <li
-                    key={index}
-                    onClick={() => setActiveType(el)}
-                    className={activeType === el ? "active" : ""}
-                  >
-                    {typeNames[el]}
-                  </li>
-                );
-              })}
-            </ul>
-            <ul>
-              {sizes.map((el, index) => {
-                return (
-                  <li
-                    key={index}
-                    onClick={() => setActiveSize(index)}
-                    className={activeSize === index ? "active" : ""}
-                  >
-                    {el} см.
-                  </li>
-                );
-              })}
-            </ul>
-          </div>
+          
           <div className="pizza-block__bottom">
             <div className="pizza-block__price">от {price} ₽</div>
             {addedCount === 0 ? (
@@ -106,4 +78,4 @@ const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }) => {
     );
 };
 
-export default PizzaBlock;
+export default BurgerBlock;
