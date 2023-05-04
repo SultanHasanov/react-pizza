@@ -7,22 +7,25 @@ import CartEmpty from "../components/CartEmpty";
 import axios from "axios";
 import { useState } from "react";
 import { chat_id, token } from "../key";
+ 
 
 const Cart = () => {
   const dispatch = useDispatch();
+
+  const [open, setOpen] = React.useState(false);
+
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const [file, setFile] = useState(null);
   const [fileActive, setFileActive] = useState();
-  console.log(file);
   const { totalPrice, items } = useSelector((state) => state.cart);
   // const imageUrl = items.map((el) => el.imageUrl);
   const title = items.map((el) => el.title);
   const type = items.map((el) => el.type);
   const size = items.map((el) => el.size);
   const count = items.map((el) => el.count);
-
+console.log(items)
   const discount =
     totalPrice >= 2000 && totalPrice < 5000
       ? totalPrice / 10
@@ -37,8 +40,9 @@ const Cart = () => {
       dispatch(clearItem());
     }
   };
-
+  
   function handleSend() {
+    setOpen(true)
     const url_api = `https://api.telegram.org/bot${token}/sendDocument`;
     const url_api2 = `https://api.telegram.org/bot${token}/sendMessage`;
 
@@ -58,6 +62,7 @@ const Cart = () => {
 
 //     alert("Загрузите квитанцию !!!");
 //  } else {
+  
    axios.post(url_api2, {
      chat_id: chat_id,
      parse_mode: "html",
@@ -73,13 +78,13 @@ const Cart = () => {
    setName("");
    setPhone("");
    setAddress("");
-   window.alert("Заявка отправлена !!!");
+  //  window.alert("Заявка отправлена !!!");
    dispatch(clearItem());
     setFileActive()
     
  
 }              
-  if (!totalPrice) {
+  if (!items.length) {
     return <CartEmpty />;
   }
 
@@ -245,13 +250,9 @@ const Cart = () => {
             placeholder="Адрес доставки"
           />
 
-          <input
-            className="photo_inp"
-            type="file"
-            onChange={onChangeFile}
-          />
+          <input className="photo_inp" type="file" onChange={onChangeFile} />
           {/* <iframe src={file}></iframe> */}
-          <iframe  src={fileActive} width="300px" height='200px'></iframe>
+          <iframe src={fileActive} width="300px" height="200px"></iframe>
 
           {/* <a target="_blank" href={file}>
             Open
@@ -261,6 +262,7 @@ const Cart = () => {
           <button style={{ marginTop: "50px" }} onClick={handleSend}>
             Оформить заказ
           </button>
+         
         </form>
       </div>
     </div>

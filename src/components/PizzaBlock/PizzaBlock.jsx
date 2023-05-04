@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { addItem, minusItem } from '../../features/cartSlice'
 
 const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }) => {
@@ -13,6 +14,8 @@ const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }) => {
   const [text, setText] = useState('Хватит')
 
   const onClickAdd = () => {
+
+
     if(addedCount >= 5){
       setText(text)
     }
@@ -24,7 +27,17 @@ const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }) => {
       type: typeNames[activeType],
       size: sizes[activeSize],
     };
-    dispatch(addItem(item))
+    dispatch(addItem(item) )
+toast(`Добавлена. В корзине ${addedCount + 1} пицц`, {
+  position: "top-left",
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+  theme: "light",
+});
   }
 
   const onClickMinus = () => {
@@ -102,6 +115,18 @@ const PizzaBlock = ({ id, title, price, imageUrl, sizes, types }) => {
           </div>
           {addedCount >= 5 ? text : ""}
         </div>
+        <ToastContainer
+          position="top-left"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick={true}
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="light"
+        />
       </div>
     );
 };

@@ -11,14 +11,14 @@ const Header = () => {
 
 
   const totalCount = items.reduce((sum, item) => sum + item.count, 0)
-
-  React.useEffect(() => {
-if(isMounted.current){
   const json = JSON.stringify(items)
   localStorage.setItem('cart', json)
-}
- isMounted.current = true
-  }, [items])
+console.log(json) 
+//   React.useEffect(() => {
+// if(isMounted.current){
+// }
+//  isMounted.current = true
+//   }, [items])
 
   return (
     <div className="header">
