@@ -66,7 +66,7 @@ const Cart = () => {
     }, [])
 
     useEffect(() => {
-        if (name) {
+        if (!name || !phone) {
           tg.MainButton.hide();
         } else {
           tg.MainButton.show();
