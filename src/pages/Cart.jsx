@@ -5,7 +5,7 @@ import CartItem from "../components/CartItem";
 import { clearItem } from "../features/cartSlice";
 import CartEmpty from "../components/CartEmpty";
 import axios from "axios";
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 import { chat_id, token } from "../key";
 import { useTelegram } from "../../hooks/useTelegram";
