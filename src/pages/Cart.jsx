@@ -71,7 +71,7 @@ const Cart = () => {
         } else {
           tg.MainButton.show();
         }
-    }, [name])
+    }, [name, phone])
   
   function handleSend() {
     setOpen(true)
