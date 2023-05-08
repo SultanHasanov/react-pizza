@@ -13,7 +13,6 @@ const Header = () => {
   const totalCount = items.reduce((sum, item) => sum + item.count, 0)
   const json = JSON.stringify(items)
   localStorage.setItem('cart', json)
-console.log(json) 
 //   React.useEffect(() => {
 // if(isMounted.current){
 // }

@@ -5,15 +5,16 @@ import CartItem from "../components/CartItem";
 import { clearItem } from "../features/cartSlice";
 import CartEmpty from "../components/CartEmpty";
 import axios from "axios";
-import { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
+
 import { chat_id, token } from "../key";
+import { useTelegram } from "../../hooks/useTelegram";
  
 
 const Cart = () => {
   const dispatch = useDispatch();
 
   const [open, setOpen] = React.useState(false);
-
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
@@ -25,7 +26,6 @@ const Cart = () => {
   const type = items.map((el) => el.type);
   const size = items.map((el) => el.size);
   const count = items.map((el) => el.count);
-console.log(items)
   const discount =
     totalPrice >= 2000 && totalPrice < 5000
       ? totalPrice / 10
@@ -40,6 +40,39 @@ console.log(items)
       dispatch(clearItem());
     }
   };
+
+   
+    const {tg} = useTelegram();
+
+    const onSendData = useCallback(() => {
+      const data = {
+        name,
+        phone,
+        address,
+      };
+      tg.sendData(JSON.stringify(data));
+    }, [name, phone, address]);
+
+    useEffect(() => {
+        tg.onEvent('mainButtonClicked', onSendData)
+        return () => {
+            tg.offEvent('mainButtonClicked', onSendData)
+        }
+    }, [onSendData])
+
+    useEffect(() => {
+        tg.MainButton.setParams({
+            text: 'Отправить данные'
+        })
+    }, [])
+
+    useEffect(() => {
+        if(!name || !phone) {
+            tg.MainButton.hide();
+        } else {
+            tg.MainButton.show();
+        }
+    }, [name, phone])
   
   function handleSend() {
     setOpen(true)
