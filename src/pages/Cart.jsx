@@ -48,10 +48,9 @@ const Cart = () => {
       const data = {
         name,
         phone,
-        address,
       };
       tg.sendData(JSON.stringify(data));
-    }, [name, phone, address]);
+    }, [name, phone]);
 
     useEffect(() => {
         tg.onEvent('mainButtonClicked', onSendData)
@@ -67,12 +66,12 @@ const Cart = () => {
     }, [])
 
     useEffect(() => {
-        if(!name || !phone) {
-            tg.MainButton.hide();
+        if (name) {
+          tg.MainButton.hide();
         } else {
-            tg.MainButton.show();
+          tg.MainButton.show();
         }
-    }, [name, phone])
+    }, [name])
   
   function handleSend() {
     setOpen(true)
