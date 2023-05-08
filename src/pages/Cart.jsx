@@ -8,7 +8,7 @@ import axios from "axios";
 import { useCallback, useEffect, useState } from "react";
 
 import { chat_id, token } from "../key";
-import { useTelegram } from "../../hooks/useTelegram";
+import { useTelegram } from "./hooks/useTelegram";
  
 
 const Cart = () => {
