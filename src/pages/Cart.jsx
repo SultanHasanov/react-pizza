@@ -9,7 +9,6 @@ import { useCallback, useEffect, useState } from "react";
 
 import { chat_id, token } from "../key";
 import { useTelegram } from "./hooks/useTelegram";
- 
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -41,40 +40,39 @@ const Cart = () => {
     }
   };
 
-   
-    const {tg} = useTelegram();
+  const { tg } = useTelegram();
 
-    const onSendData = useCallback(() => {
-      const data = {
-        name,
-        phone,
-      };
-      tg.sendData(JSON.stringify(data));
-    }, [name, phone]);
+  const onSendData = useCallback(() => {
+    const data = {
+      name,
+      phone,
+    };
+    tg.sendData(JSON.stringify(data));
+  }, [name, phone]);
 
-    useEffect(() => {
-        tg.onEvent('mainButtonClicked', onSendData)
-        return () => {
-            tg.offEvent('mainButtonClicked', onSendData)
-        }
-    }, [onSendData])
+  useEffect(() => {
+    tg.onEvent("mainButtonClicked", onSendData);
+    return () => {
+      tg.offEvent("mainButtonClicked", onSendData);
+    };
+  }, [onSendData]);
 
-    useEffect(() => {
-        tg.MainButton.setParams({
-            text: 'Отправить данные'
-        })
-    }, [])
+  useEffect(() => {
+    tg.MainButton.setParams({
+      text: "Отправить данные",
+    });
+  }, []);
 
-    useEffect(() => {
-        if (!name || !phone) {
-          tg.MainButton.hide();
-        } else {
-          tg.MainButton.show();
-        }
-    }, [name, phone])
-  
+  useEffect(() => {
+    if (!name || !phone) {
+      tg.MainButton.hide();
+    } else {
+      tg.MainButton.show();
+    }
+  }, [name, phone]);
+
   function handleSend() {
-    setOpen(true)
+    setOpen(true);
     const url_api = `https://api.telegram.org/bot${token}/sendDocument`;
     const url_api2 = `https://api.telegram.org/bot${token}/sendMessage`;
 
@@ -90,32 +88,29 @@ const Cart = () => {
       totalPrice - discount
     } <b>₽</b>\n`;
     // message += `Название: <a href="${imageUrl}"><b>${title}</b></a>`;
-//  if(!file){
+    //  if(!file){
 
-//     alert("Загрузите квитанцию !!!");
-//  } else {
-  
-   axios.post(url_api2, {
-     chat_id: chat_id,
-     parse_mode: "html",
-     text: message,
-   });
-   
+    //     alert("Загрузите квитанцию !!!");
+    //  } else {
 
-   const formData = new FormData();
-   formData.append("document", file);
-   formData.append("chat_id", chat_id);
+    axios.post(url_api2, {
+      chat_id: chat_id,
+      parse_mode: "html",
+      text: message,
+    });
 
-   axios.post(url_api, formData);
-   setName("");
-   setPhone("");
-   setAddress("");
-  //  window.alert("Заявка отправлена !!!");
-   dispatch(clearItem());
-    setFileActive()
-    
- 
-}              
+    const formData = new FormData();
+    formData.append("document", file);
+    formData.append("chat_id", chat_id);
+
+    axios.post(url_api, formData);
+    setName("");
+    setPhone("");
+    setAddress("");
+    //  window.alert("Заявка отправлена !!!");
+    dispatch(clearItem());
+    setFileActive();
+  }
   if (!items.length) {
     return <CartEmpty />;
   }
@@ -123,7 +118,7 @@ const Cart = () => {
   const onChangeFile = (e) => {
     setFile(e.target.files[0]);
     setFileActive(URL.createObjectURL(e.target.files[0]));
-  }
+  };
 
   return (
     <div className="container container--cart">
@@ -294,11 +289,10 @@ const Cart = () => {
           <button style={{ marginTop: "50px" }} onClick={handleSend}>
             Оформить заказ
           </button>
-         
         </form>
       </div>
     </div>
   );
 };
 
-export default Cart
+export default Cart;

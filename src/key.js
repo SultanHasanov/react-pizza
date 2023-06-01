@@ -1,2 +1,2 @@
-export const token = "5827530379:AAHxPmOgLHryfbU0CP-yiWpXo96VxisbD3Q";
+export const token = "5827530379:AAGEcp1lsyTruMM6g5RcEQoaffMVkx3U1Mo";
 export const chat_id = "-1001811930704";
