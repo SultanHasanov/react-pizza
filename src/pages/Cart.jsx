@@ -42,34 +42,34 @@ const Cart = () => {
 
   const { tg } = useTelegram();
 
-  const onSendData = useCallback(() => {
-    const data = {
-      name,
-      phone,
-    };
-    tg.sendData(JSON.stringify(data));
-  }, [name, phone]);
+  // const onSendData = useCallback(() => {
+  //   const data = {
+  //     name,
+  //     phone,
+  //   };
+  //   tg.sendData(JSON.stringify(data));
+  // }, [name, phone]);
 
-  useEffect(() => {
-    tg.onEvent("mainButtonClicked", onSendData);
-    return () => {
-      tg.offEvent("mainButtonClicked", onSendData);
-    };
-  }, [onSendData]);
+  // useEffect(() => {
+  //   tg.onEvent("mainButtonClicked", onSendData);
+  //   return () => {
+  //     tg.offEvent("mainButtonClicked", onSendData);
+  //   };
+  // }, [onSendData]);
 
-  useEffect(() => {
-    tg.MainButton.setParams({
-      text: "Отправить данные",
-    });
-  }, []);
+  // useEffect(() => {
+  //   tg.MainButton.setParams({
+  //     text: "Отправить данные",
+  //   });
+  // }, []);
 
-  useEffect(() => {
-    if (!name || !phone) {
-      tg.MainButton.hide();
-    } else {
-      tg.MainButton.show();
-    }
-  }, [name, phone]);
+  // useEffect(() => {
+  //   if (!name || !phone) {
+  //     tg.MainButton.hide();
+  //   } else {
+  //     tg.MainButton.show();
+  //   }
+  // }, [name, phone]);
 
   function handleSend() {
     setOpen(true);
