@@ -11,6 +11,7 @@ import { setCategoryId } from "../features/filterSlice";
 const Pizza = () => {
   const categoryId = useSelector((state) => state.filter.categoryId);
   const dispatch = useDispatch();
+  
 
   const { searchValue } = React.useContext(SearchContext);
 
@@ -35,6 +36,7 @@ const Pizza = () => {
     const res = await axios.get(
       `https://63642ce67b209ece0f42316d.mockapi.io/pizza?${categoryId > 0 ? `category=${categoryId}` : ''}&sortBy=${sortType.sortProperty}&order=desc`
     );
+    
     setPizzas(res.data);
     setIsLoading(false);
     window.scrollTo(0, 0);
@@ -63,24 +65,6 @@ const Pizza = () => {
               ?.map((obj) => {
                 return <PizzaBlock key={obj.id} {...obj} />;
               })}
-        {/* <button onClick={handleActiveOtziv} className="btn_otziv">
-          Оставить отзыв
-        </button>
-        {formactive && (
-          <div className="atziv_popup">
-            <form
-              enctype="multipart/form-data"
-              method="post"
-              id="form"
-              onSubmit="send(event, 'send.php')"
-            >
-              <input type="text" placeholder="Имя" name="name" />
-              <input type="text" placeholder="Отзыв" name="otziv" />
-              <input type="number" placeholder="Телефон" name="phone" />
-              <button type="submit">Отправить отзыв</button>
-            </form>
-          </div>
-        )} */}
       </div>
     </div>
   );

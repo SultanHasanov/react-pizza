@@ -10,7 +10,7 @@ const Home = () => {
             <img
               className="image_home"
               width="265px"
-              src="https://dodopizza.azureedge.net/static/Img/Products/f035c7f46c0844069722f2bb3ee9f113_584x584.jpeg"
+              src="https://media.dodostatic.net/image/r:584x584/11ee7d610a62d78598406363a9a8ad65.avif"
               alt=""
             />
           </Link>
